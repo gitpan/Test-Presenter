@@ -29,7 +29,7 @@ use fields qw(
 );
 
 use vars qw( %FIELDS $AUTOLOAD $VERSION );
-our $VERSION = '0.2';
+our $VERSION = '0.3';
 
 sub caption {
     my $self = shift;
@@ -524,11 +524,11 @@ __END__
 
 =head1 AUTHOR
 
-Mark Wong <markw@osdl.org>
+Mark Wong <markwkm@gmail.com>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2006 Mark Wong & Open Source Development Labs, Inc.
+Copyright (C) 2006-2008 Mark Wong & Open Source Development Labs, Inc.
 All Rights Reserved.
 
 This script is free software; you can redistribute it and/or modify it

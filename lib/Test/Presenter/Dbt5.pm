@@ -48,7 +48,7 @@ use fields qw(
 );
 
 use vars qw( %FIELDS $AUTOLOAD $VERSION );
-our $VERSION = '0.2';
+our $VERSION = '0.3';
 
 sub format {
     my $self = shift;
@@ -164,7 +164,7 @@ sub plot_metric {
             'y-axis label' => 'Trade-Result Transactions',
             'extra_opts' => 'set grid xtics ytics',
             'output type' => $self->{format},
-            'output file' => "$self->{outdir}/notpm.$self->{format}"
+            'output file' => "$self->{outdir}/trtps.$self->{format}"
     );
     my %dsopts = (
             'title' => 'Trade-Result',
@@ -268,7 +268,7 @@ sub to_html {
                     $q->td($self->{xml}->{errors})
             )
     );
-    my $t2 = $q->td($self->image_check("notpm.$self->{format}"));
+    my $t2 = $q->td($self->image_check("trtps.$self->{format}"));
     $h .= $q->p(
             $q->table($q->caption('Results Summary') .
                     $q->Tr($q->td($t1) . $q->td($t2))));
@@ -329,9 +329,14 @@ sub to_html {
         $links .= $q->td({align => 'center'},
                 $self->image_check("dist_$txn." . $self->{format}));
 
+        my $mix = 'N/A';
+        if ($txn ne '10') {
+            $mix = sprintf('%.2f', $i->{mix});
+        }
+
         $s .= $q->Tr(
                 $q->td($tname) .
-                $q->td({align => "right"}, sprintf('%.2f', $i->{mix})) .
+                $q->td({align => "right"}, $mix) .
                 $q->td({align => "right"}, $i->{total}) .
                 $q->td({align => "right"}, sprintf('%.2f', $i->{rt_avg})) .
                 $q->td({align => "right"}, sprintf('%.2f', $i->{rt_90th})) .
@@ -636,17 +641,17 @@ sub process_mix {
         if ($current_time >= ($previous_time + $sample_length)) {
             push @{$self->{xml}->{rt}->{data}},
                     {elapsed_time => $elapsed_time,
-                    '0' => $current_transaction_count{'0'},
-                    '1' => $current_transaction_count{'1'},
-                    '2' => $current_transaction_count{'2'},
-                    '3' => $current_transaction_count{'3'},
-                    '4' => $current_transaction_count{'4'},
-                    '5' => $current_transaction_count{'5'},
-                    '6' => $current_transaction_count{'6'},
-                    '7' => $current_transaction_count{'7'},
-                    '8' => $current_transaction_count{'8'},
-                    '9' => $current_transaction_count{'9'},
-                    '10' => $current_transaction_count{'10'}};
+                    '0' => $current_transaction_count{'0'} / $sample_length,
+                    '1' => $current_transaction_count{'1'} / $sample_length,
+                    '2' => $current_transaction_count{'2'} / $sample_length,
+                    '3' => $current_transaction_count{'3'} / $sample_length,
+                    '4' => $current_transaction_count{'4'} / $sample_length,
+                    '5' => $current_transaction_count{'5'} / $sample_length,
+                    '6' => $current_transaction_count{'6'} / $sample_length,
+                    '7' => $current_transaction_count{'7'} / $sample_length,
+                    '8' => $current_transaction_count{'8'} / $sample_length,
+                    '9' => $current_transaction_count{'9'} / $sample_length,
+                    '10' => $current_transaction_count{'10'} / $sample_length};
             ++$elapsed_time;
             $previous_time = $current_time;
             #
@@ -717,11 +722,11 @@ __END__
 
 =head1 AUTHOR
 
-Mark Wong <markw@osdl.org>
+Mark Wong <markwkm@gmail.com>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2006 Mark Wong & Open Source Development Labs, Inc.
+Copyright (C) 2006-2008 Mark Wong & Open Source Development Labs, Inc.
 All Rights Reserved.
 
 This script is free software; you can redistribute it and/or modify it

@@ -34,7 +34,6 @@ my %opts = (
                 'Pod::Usage'       => 0,
                 'Getopt::Long'     => 0,
                 'IO::File'         => 0,
-                'Sleepycat::DbXml' => 0,
                 'Template'         => 0,
                 'Chart::Graph::Gnuplot' => 0,
                 'SVG::TT::Graph' => 0,

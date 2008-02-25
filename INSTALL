@@ -12,8 +12,8 @@ software, however, and any versions future to these should work well:
     berkeley dbxml   v2.2.13
     gnuplot          v4.0
 
-The dbxml package is required for Test::Presenter.  Unfortunately, few
-distros carry this, so you will probably need to install from source
+The dbxml package is needed for some parts of Test::Presenter.  Unfortunately,
+few distros carry this, so you will probably need to install from source
 for now.  The source code is available from here:
 
     http://dev.sleepycat.com/downloads/releasehistorybdbxml.html

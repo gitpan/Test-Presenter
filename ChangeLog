@@ -1,5 +1,10 @@
 Revision history for Test::Presenter
 
+HEAD
+    Mark Wong <markwkm@gmail.com>:
+	Fixed units of the metric plotting for DBT-5.
+	Fixed the mix percentage reporting for DBT-5.
+
 0.2	as of Mon 12 Feb 15:17:00 -0700 2007
 
     Bryce Harrington <bryce@osdl.org>:
