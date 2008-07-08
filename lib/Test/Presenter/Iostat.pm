@@ -29,7 +29,7 @@ use fields qw(
 );
 
 use vars qw( %FIELDS $AUTOLOAD $VERSION );
-our $VERSION = '0.4';
+our $VERSION = '0.5';
 
 sub caption {
     my $self = shift;
@@ -66,7 +66,6 @@ sub to_html {
     my $h4 = '';
     my $h5 = '';
     my $h6 = '';
-    my $h7 = '';
     my $h8 = '';
     my $h9 = '';
 
@@ -76,10 +75,9 @@ sub to_html {
         $h1 = $q->td('Average Queue Length');
         $h2 = $q->td('Average Request Size');
         $h3 = $q->td('Average Request Time');
-        $h4 = $q->td('Read/Write Kilobytes');
+        $h4 = $q->td('Read/Write Megabytes');
         $h5 = $q->td('Read/Write Requests Merged');
         $h6 = $q->td('Read/Write Requests');
-        $h7 = $q->td('Read/Write Sectors');
         $h8 = $q->td('Average Service Time');
         $h9 = $q->td('Disk Utilization');
     }
@@ -121,12 +119,6 @@ sub to_html {
                     $q->td({align => 'center'},
                             $self->image_link(
                                     "$dir/iostat-rw.$self->{format}"))
-            ) .
-            $q->Tr(
-                    $h7 .
-                    $q->td({align => 'center'},
-                            $self->image_link(
-                                    "$dir/iostat-sec.$self->{format}"))
             ) .
             $q->Tr(
                     $h8 .
@@ -261,13 +253,13 @@ sub plot {
             'type' => 'columns'
     );
     #
-    # Read/Write kilobytes per second.
+    # Read/Write megabytes per second.
     #
     my %gopts_kb = (
-            'title' => 'Read/Write Kilobytes',
+            'title' => 'Read/Write Megabytes',
             'yrange' => '[0:]',
             'x-axis label' => "Elapsed Time ($self->{time_units})",
-            'y-axis label' => 'Kilobytes / Second',
+            'y-axis label' => 'Megabytes / Second',
             'extra_opts' => 'set grid xtics ytics',
             'output type' => "$self->{format}",
             'output file' => "$self->{outdir}/iostat-kb.$self->{format}"
@@ -427,37 +419,21 @@ sub plot {
         }
         push @ds_rw, [\%{$h}, \@x, \@{$dev->{$k}->{w}}];
         #
-        # r/w sectors per second
-        #
-        $h = ();
-        $h->{title} = "$k rsec";
-        for my $kk (keys %dsopts_temp_sec) {
-            $h->{$kk} = $dsopts_temp_sec{$kk};
-        }
-        push @ds_sec, [\%{$h}, \@x, \@{$dev->{$k}->{rsec}}];
-
-        $h = ();
-        $h->{title} = "$k wsec";
-        for my $kk (keys %dsopts_temp_sec) {
-            $h->{$kk} = $dsopts_temp_sec{$kk};
-        }
-        push @ds_sec, [\%{$h}, \@x, \@{$dev->{$k}->{wsec}}];
-        #
         # r/w kilobytes per second
         #
         $h = ();
-        $h->{title} = "$k rkb";
+        $h->{title} = "$k rmb";
         for my $kk (keys %dsopts_temp_kb) {
             $h->{$kk} = $dsopts_temp_kb{$kk};
         }
-        push @ds_kb, [\%{$h}, \@x, \@{$dev->{$k}->{rkb}}];
+        push @ds_kb, [\%{$h}, \@x, \@{$dev->{$k}->{rmb}}];
 
         $h = ();
-        $h->{title} = "$k wkb";
+        $h->{title} = "$k wmb";
         for my $kk (keys %dsopts_temp_kb) {
             $h->{$kk} = $dsopts_temp_kb{$kk};
         }
-        push @ds_kb, [\%{$h}, \@x, \@{$dev->{$k}->{wkb}}];
+        push @ds_kb, [\%{$h}, \@x, \@{$dev->{$k}->{wmb}}];
         #
         # avgrq-sz
         #
@@ -510,7 +486,6 @@ sub plot {
     #
     gnuplot(\%gopts_rqm, @ds_rqm);
     gnuplot(\%gopts_rw, @ds_rw);
-    gnuplot(\%gopts_sec, @ds_sec);
     gnuplot(\%gopts_kb, @ds_kb);
     gnuplot(\%gopts_avgrq, @ds_avgrq);
     gnuplot(\%gopts_avgqu, @ds_avgqu);

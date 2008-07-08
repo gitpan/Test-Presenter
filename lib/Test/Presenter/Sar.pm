@@ -27,7 +27,7 @@ use fields qw(
 );
 
 use vars qw( %FIELDS $AUTOLOAD $VERSION );
-our $VERSION = '0.4';
+our $VERSION = '0.5';
 
 sub format {
     my $self = shift;

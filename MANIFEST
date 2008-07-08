@@ -23,6 +23,7 @@ lib/Test/Presenter/Dbt2.pm
 lib/Test/Presenter/Dbt5.pm
 lib/Test/Presenter/DbXml.pm
 lib/Test/Presenter/Iostat.pm
+lib/Test/Presenter/Mpstat.pm
 lib/Test/Presenter/Present.pm
 lib/Test/Presenter/Query.pm
 lib/Test/Presenter/QueryTemplate.pm
@@ -35,6 +36,10 @@ scripts/ltp_stats
 scripts/parse_lhcs
 scripts/parse_ltp
 scripts/parse_pynfs
+scripts/plot-iostat
+scripts/plot-mpstat
+scripts/plot-sar
+scripts/plot-vmstat
 scripts/plot_bars_svg.pl
 scripts/plot_iozone
 scripts/plot_iozone_cmp
@@ -59,3 +64,4 @@ tm/xy.config
 tm/xyplot.tmpl
 tm/xyz.config
 tm/xyzplot.tmpl
+META.yml                                 Module meta-data (added by MakeMaker)

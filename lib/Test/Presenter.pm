@@ -65,7 +65,7 @@ use fields qw(
               );
 
 use vars qw( %FIELDS $VERSION );
-our $VERSION = '0.4';
+our $VERSION = '0.5';
 
 
 =head2 new()
